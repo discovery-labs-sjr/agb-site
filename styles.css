@@ -80,3 +80,5 @@
 @media(prefers-reduced-motion:reduce){
  .explorer,.stage-photo,.related-item,.related-thumb img{animation:none!important;transition:none!important}
 }
+
+.stage-hint{position:absolute;left:24px;bottom:24px;z-index:2;color:#766b5c;font-size:8px;letter-spacing:.18em;background:#f7f3ebc9;padding:10px 12px;backdrop-filter:blur(8px);pointer-events:none}@media(max-width:800px){.stage-hint{left:12px;bottom:12px;font-size:7px;padding:8px 9px}}
