@@ -130,3 +130,35 @@
 .agb-cursor.visible{opacity:1}.agb-cursor.hover{width:48px;height:48px;background:#98604418}.agb-cursor.pressed{width:18px;height:18px;background:#98604455}
 @media(max-width:800px){.agb-cursor{display:none}}
 @media(prefers-reduced-motion:reduce){.scene-caption>div{transition:none}}
+
+/* Correctifs d'interaction — moteur de profondeur et rail synchronisé sur le HTML Pause Café */
+.scene-card{left:0;top:0;width:auto;height:auto;transform-origin:0 0;will-change:transform,filter,opacity}
+.scene-card img{pointer-events:none;user-select:none;-webkit-user-drag:none}
+.scene-window{cursor:none;touch-action:pan-y}
+.scene-window.dragging{cursor:none}
+.product-rail{min-height:0}
+.rail-window{position:relative;display:block;flex:1;min-height:0;overflow:hidden}
+.rail-list{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.rail-card{position:absolute;left:0;top:0;width:100%;height:33.333%;min-height:0;display:grid;grid-template-columns:82px minmax(0,1fr) 34px;gap:12px;align-items:center;padding:10px;border:1px solid transparent;will-change:transform;transition:background .2s,border-color .2s}
+.rail-card.selected{background:#e9dfd1;border-color:#d7c8b6}
+.rail-photo{display:block;width:82px;height:82px;border:0;padding:0;background:#ded2c2;overflow:hidden}
+.add-product{display:grid;place-items:center;width:34px;height:34px;border:1px solid #ad8064;background:transparent;color:#8f5235;font-size:22px;line-height:1;cursor:pointer;transition:background .18s,color .18s,transform .18s}
+.add-product:hover,.add-product.added{background:#8f5235;color:#fff}
+.add-product:active{transform:scale(.9)}
+.agb-cursor{will-change:transform}
+@media(max-width:800px){
+ .product-rail{border-left:0;border-top:1px solid #d9cebf;padding:16px 0 0}
+ .rail-window{height:170px;flex:none;overflow:hidden}
+ .rail-list{display:block;width:100%;height:100%}
+ .rail-card{width:160px;height:100%;display:grid;grid-template-columns:62px minmax(0,1fr) 28px;gap:8px;padding:8px;align-items:center}
+ .rail-photo{width:62px;height:62px}
+ .add-product{width:28px;height:28px}
+ .rail-footer{margin-top:12px}
+}
+@media(max-width:430px){
+ .rail-window{height:154px}
+ .rail-card{width:154px;grid-template-columns:54px minmax(0,1fr) 26px;gap:7px;padding:7px}
+ .rail-photo{width:54px;height:54px}
+ .add-product{width:26px;height:26px}
+}
+@media(prefers-reduced-motion:reduce){.scene-card,.rail-card,.add-product{transition:none!important}}
