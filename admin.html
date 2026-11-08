@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f3eb"><meta name="description" content="Administration du catalogue AGB.">
+<title>Administration — AGB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<header class="admin-header"><a class="brand" href="index.html"><span class="brand-mark">AGB</span><span class="brand-name">Adelice Gracieuse<br><small>BUSINESS</small></span></a><a class="back-link" href="index.html">← Voir le site</a></header>
+<main class="shell">
+<section class="intro"><p class="eyebrow">ESPACE PRIVÉ · AGB</p><h1>Votre catalogue,<br><em>en toute simplicité.</em></h1><p>Gérez les produits, les pauses et les catégories affichés sur votre site.</p></section>
+<div id="notice" class="notice" role="status" aria-live="polite"></div>
+<section id="auth-panel" class="panel auth-panel">
+<div><p class="eyebrow">ACCÈS ADMINISTRATEUR</p><h2>Bienvenue.</h2><p class="muted">Connexion réservée à someremy54@gmail.com.</p></div>
+<form id="auth-form" class="stack">
+<label>Adresse e-mail<input id="auth-email" type="email" value="someremy54@gmail.com" autocomplete="username" required></label>
+<label>Mot de passe<input id="auth-password" type="password" minlength="8" autocomplete="current-password" required placeholder="8 caractères minimum"></label>
+<div class="auth-actions"><button class="primary" type="submit" id="login-btn">Se connecter</button><button class="secondary" type="button" id="signup-btn">Créer mon accès</button></div>
+<p class="fine">La création de compte est limitée à l’adresse autorisée. Si Supabase demande une confirmation, consultez la boîte de réception de cette adresse.</p>
+</form>
+</section>
+<section id="dashboard" hidden>
+<div class="dashboard-top"><div><p class="eyebrow">TABLEAU DE BORD</p><h2>Gestion du catalogue</h2><p class="muted" id="signed-user"></p></div><button id="logout-btn" class="secondary">Déconnexion</button></div>
+<div class="stats" id="stats"></div>
+<div class="columns">
+<section class="panel">
+<div class="panel-title"><div><p class="eyebrow">01 · ARTICLES</p><h3>Produits</h3></div><span class="tag">Catalogue public</span></div>
+<form id="product-form" class="stack">
+<input type="hidden" id="product-id">
+<label>Catégorie<select id="product-category" required></select></label>
+<label>Nom du produit<input id="product-name" maxlength="100" required placeholder="Ex. Jus de bissap"></label>
+<label>Description<textarea id="product-description" rows="3" maxlength="500" placeholder="Une courte description"></textarea></label>
+<div class="two">
+<label>Prix (FCFA)<input id="product-price" type="number" min="0" step="1" placeholder="Laisser vide si non défini"></label>
+<label>Position de l’image<input id="product-position" value="50% 50%" placeholder="50% 50%"></label>
+</div>
+<label>Photo du produit<input id="product-image" type="file" accept="image/jpeg,image/png,image/webp"><small>JPG, PNG ou WebP · 5 Mo maximum</small></label>
+<label class="check"><input id="product-active" type="checkbox"> Publier ce produit sur le site</label>
+<div class="actions"><button class="primary" type="submit">Enregistrer le produit</button><button class="secondary" type="button" data-reset="product-form">Annuler</button></div>
+</form>
+<div class="list-head"><h4>Produits enregistrés</h4><span id="product-total">0</span></div><div id="products-list" class="record-list"></div>
+</section>
+<section class="panel">
+<div class="panel-title"><div><p class="eyebrow">02 · VISUELS</p><h3>Pauses à la une</h3></div><span class="tag">Scène principale</span></div>
+<form id="pause-form" class="stack">
+<input type="hidden" id="pause-id">
+<label>Titre<input id="pause-title" maxlength="100" required placeholder="Ex. Pause gourmande"></label>
+<label>Description<textarea id="pause-description" rows="3" maxlength="500" placeholder="Présentez cette pause"></textarea></label>
+<div class="two"><label>Position de l’image<input id="pause-position" value="50% 50%"></label><label>Ordre d’affichage<input id="pause-order" type="number" value="0" step="1"></label></div>
+<label>Photo<input id="pause-image" type="file" accept="image/jpeg,image/png,image/webp"><small>JPG, PNG ou WebP · 5 Mo maximum</small></label>
+<label class="check"><input id="pause-active" type="checkbox" checked> Afficher cette pause</label>
+<div class="actions"><button class="primary" type="submit">Enregistrer la pause</button><button class="secondary" type="button" data-reset="pause-form">Annuler</button></div>
+</form>
+<div class="list-head"><h4>Pauses enregistrées</h4><span id="pause-total">0</span></div><div id="pauses-list" class="record-list"></div>
+</section>
+</div>
+<section class="panel categories-panel">
+<div class="panel-title"><div><p class="eyebrow">03 · ORGANISATION</p><h3>Catégories</h3></div></div>
+<form id="category-form" class="stack category-form"><input type="hidden" id="category-id"><div class="two"><label>Nom<input id="category-name" required maxlength="80"></label><label>Identifiant (slug)<input id="category-slug" required pattern="[a-z0-9-]+" placeholder="ex. pause-cafe"></label></div><label>Description<input id="category-description" maxlength="240"></label><label class="check"><input id="category-active" type="checkbox" checked> Catégorie visible</label><div class="actions"><button class="primary" type="submit">Enregistrer la catégorie</button><button class="secondary" type="button" data-reset="category-form">Annuler</button></div></form>
+<div id="categories-list" class="category-list"></div>
+</section>
+<p class="footer-note">Les modifications sont enregistrées dans Supabase. Un produit reste masqué tant que « Publier » n’est pas activé. Vérifiez les photos, descriptions et prix avant publication.</p>
+</section>
+</main>
+<script type="module" src="admin.js"></script>
+</body></html>
